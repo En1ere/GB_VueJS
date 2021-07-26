@@ -9,6 +9,47 @@ import Chart from "chart.js";
 export default {
   name: "Chart",
   props: ["items"],
+  watch: {
+    items: function (el1) {
+      this.calculateSortedTotalValue(el1);
+      this.getSortedCategoriesList();
+      this.sortValues(el1);
+      this.myPieChart = new Chart(this.ctx, {
+        type: "doughnut",
+        data: {
+          datasets: [
+            {
+              data: [
+                this.calculateSortedTotalValue(this.arrAccessories),
+                this.calculateSortedTotalValue(this.arrEducation),
+                this.calculateSortedTotalValue(this.arrEntertainments),
+                this.calculateSortedTotalValue(this.arrFood),
+                this.calculateSortedTotalValue(this.arrGifts),
+                this.calculateSortedTotalValue(this.arrInternet),
+                this.calculateSortedTotalValue(this.arrSport),
+                this.calculateSortedTotalValue(this.arrTransport),
+              ],
+              backgroundColor: [
+                "rgb(25, 45, 255)",
+                "rgb(66, 161, 255)",
+                "rgb(148, 66, 255)",
+                "rgb(199, 253, 255)",
+                "teal",
+                "rgb(104, 168, 59)",
+                "rgb(25, 255, 67)",
+                "rgb(247, 201, 255)",
+              ],
+            },
+          ],
+          labels: this.categoriesList,
+        },
+        options: {
+          cutoutPercentage: 50,
+          legend: { position: "right", labels: { fontSize: 16 } },
+        },
+      });
+    },
+  },
   data() {
     return {
       ctx: "",
